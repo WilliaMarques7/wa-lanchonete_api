@@ -1,10 +1,9 @@
 ﻿using Domain.Entities;
-using Microsoft.AspNetCore.Mvc;
 using System.Linq.Expressions;
 
 namespace Domain.Repositories
 {
-    public interface IOrderRepository: IRepository<Order>
+    public interface IOrderRepository : IRepository<Order>
     {
         Task<Order> GetOrderByFilterAsync(Expression<Func<Order, bool>> predicate);
         Task<IEnumerable<Order>> GetOrderListByFilterAsync(Expression<Func<Order, bool>> predicate);

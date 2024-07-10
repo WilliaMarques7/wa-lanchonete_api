@@ -1,0 +1,6 @@
+{
+  "url": "https://api.mercadopago.com/instore/orders/qr/seller/collectors/186249149/pos/SUC001POS001/qrs",
+  "toker": "TEST-7611799853194381-052816-ced911c8c14e503ce144bc29765a32e8-186249149",
+  "userId": "186249149",
+  "notificationUrl": "https://www.yourserver.com/notifications"
+}

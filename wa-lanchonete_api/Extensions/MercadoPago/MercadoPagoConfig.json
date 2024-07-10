@@ -1,0 +1,25 @@
+{
+  "cash_out": {
+    "amount": 0
+  },
+  "description": "Purchase description.",
+  "external_reference": "reference_12345",
+  "items": [
+    {
+      "sku_number": "A123K9191938",
+      "category": "marketplace",
+      "title": "Point Mini",
+      "description": "This is the Point Mini",
+      "unit_price": 100,
+      "quantity": 1,
+      "unit_measure": "unit",
+      "total_amount": 100
+    }
+  ],
+  "notification_url": "https://www.yourserver.com/notifications",
+  "sponsor": {
+    "id": 662208785
+  },
+  "title": "Product order",
+  "total_amount": 100
+}

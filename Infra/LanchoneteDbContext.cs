@@ -30,6 +30,10 @@ public partial class LanchoneteDbContext : DbContext
 
     public virtual DbSet<Product> Products { get; set; }
 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseNpgsql("Host= localhost; Database=Lanchonete;Username=postgres;Password=admin; integrated security = true");
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Category>(entity =>
@@ -147,6 +151,9 @@ public partial class LanchoneteDbContext : DbContext
             entity.ToTable("payment", "dbo");
 
             entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.InStoreOrderId)
+                .HasMaxLength(500)
+                .HasColumnName("in_store_order_id");
             entity.Property(e => e.OrderId).HasColumnName("order_id");
             entity.Property(e => e.PaymentDate)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
@@ -155,9 +162,10 @@ public partial class LanchoneteDbContext : DbContext
             entity.Property(e => e.PaymentMethod)
                 .HasMaxLength(50)
                 .HasColumnName("payment_method");
-            entity.Property(e => e.PaymentStatus)
-                .HasMaxLength(50)
-                .HasColumnName("payment_status");
+            entity.Property(e => e.PaymentStatus).HasColumnName("payment_status");
+            entity.Property(e => e.QrData)
+                .HasMaxLength(500)
+                .HasColumnName("qr_data");
 
             entity.HasOne(d => d.Order).WithMany(p => p.Payments)
                 .HasForeignKey(d => d.OrderId)
@@ -182,10 +190,6 @@ public partial class LanchoneteDbContext : DbContext
             entity.Property(e => e.Price)
                 .HasPrecision(10, 2)
                 .HasColumnName("price");
-
-            entity.HasOne(d => d.Category).WithMany(p => p.Products)
-                .HasForeignKey(d => d.CategoryId)
-                .HasConstraintName("product_category_id_fkey");
         });
 
         OnModelCreatingPartial(modelBuilder);

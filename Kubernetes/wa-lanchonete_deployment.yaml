@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wa-lanchonete-deployment
+spec:
+  template:
+    metadata:
+      name: wa-lanchonete
+      labels:
+        app: wa-lanchonete
+    spec:
+      containers:
+        - name: wa-lanchonete-container
+          image: willmarques/wa-lanchonete_api:latest
+          ports:
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: wa-lanchonete-configmap
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            periodSeconds: 10
+            failureThreshold: 3
+            initialDelaySeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            periodSeconds: 10
+            failureThreshold: 5
+            initialDelaySeconds: 3
+          resources:
+            requests:
+              cpu: 10m
+  replicas: 3
+  selector:
+    matchLabels:
+      app: wa-lanchonete

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: wa-lanchonete
+  labels:
+    app: wa-lanchonete
+spec:
+  containers:
+    - name: wa-lanchonete-container
+      image: willmarques/wa-lanchonete_api:latest
+      ports:
+        - containerPort: 80
+      envFrom:
+        - configMapRef:
+            name: wa-lanchonete-configmap
